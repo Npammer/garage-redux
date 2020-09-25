@@ -7,6 +7,12 @@ import logger from "redux-logger";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createHistory as history } from "history";
 
+// Reducers
+import carsReducer from "./reducers/cars_reducer";
+
+// Components
+import CarsIndex from "./components/cars_index";
+
 import "../assets/stylesheets/application.scss";
 
 const garageName = `garage${Math.floor(10 + Math.random() * 90)}`; //TODO prompt("What is your garage?") ||
@@ -57,7 +63,9 @@ const middlewares = applyMiddleware(reduxPromise, logger);
 ReactDOM.render(
   <Provider store={createStore(reducers, initialState, middlewares)}>
     <Router history={history}>
-      <Switch>TODO</Switch>
+      <Switch>
+        <Route path="/:garage" component={CarsIndex} />
+      </Switch>
     </Router>
   </Provider>,
   document.getElementById("root")
