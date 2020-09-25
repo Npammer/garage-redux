@@ -11,7 +11,7 @@ import { createHistory as history } from "history";
 import carsReducer from "./reducers/cars_reducer";
 
 // Components
-import CarsIndex from "./components/cars_index";
+import CarsIndex from "./containers/cars_index";
 
 import "../assets/stylesheets/application.scss";
 
@@ -29,12 +29,14 @@ const reducers = combineReducers({
 
 const middlewares = applyMiddleware(reduxPromise, logger);
 
+// TODO <Redirect from="/" to="/general" />
 // render an instance of the component in the DOM
 ReactDOM.render(
   <Provider store={createStore(reducers, initialState, middlewares)}>
     <Router history={history}>
       <Switch>
         <Route path="/:garage" component={CarsIndex} />
+        <Route path="/:garage/new" component={CarsNew} />
       </Switch>
     </Router>
   </Provider>,

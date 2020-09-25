@@ -12,7 +12,7 @@ class CarsIndex extends Component {
   renderList = () => {
     // eslint-disable-next-line arrow-parens
     return this.props.cars.map((car) => (
-      <div className="cars">
+      <div className="cars" key={car.plate}>
         <h3>{car.brand}</h3>
         <h3>{car.model}</h3>
         <h3>{car.owner}</h3>
