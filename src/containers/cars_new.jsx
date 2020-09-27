@@ -1,8 +1,33 @@
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable arrow-parens */
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { reduxForm, Field } from "redux-form";
 import { createPost } from "../actions/actions";
+
+const required = (value) => (value ? undefined : "Required");
+const plate = (value) =>
+  value && !/^[A-Z0-9]+$/.test(value) ? "Invalid plate number" : undefined;
+
+const renderField = ({
+  input,
+  label,
+  type,
+  meta: { touched, error, warning },
+}) => (
+  <div className="form-group">
+    <label>{label}</label>
+    <input
+      className="form-control"
+      {...input}
+      placeholder={label}
+      type={type}
+    />
+    {touched &&
+      ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}
+  </div>
+);
 
 class CarsNew extends Component {
   onSubmit = (values) => {
@@ -12,15 +37,6 @@ class CarsNew extends Component {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  renderField(field) {
-    return (
-      <div className="form-group">
-        <label>{field.label}</label>
-        <input className="form-control" type={field.type} {...field.input} />
-      </div>
-    );
-  }
-
   render() {
     return (
       <div className="new-car">
@@ -30,25 +46,29 @@ class CarsNew extends Component {
             label="Brand"
             name="brand"
             type="text"
-            component={this.renderField}
+            validate={required}
+            component={renderField}
           />
           <Field
             label="Model"
             name="model"
             type="text"
-            component={this.renderField}
+            validate={required}
+            component={renderField}
           />
           <Field
             label="Owner"
             name="owner"
             type="text"
-            component={this.renderField}
+            validate={required}
+            component={renderField}
           />
           <Field
             label="Plate"
             name="plate"
             type="text"
-            component={this.renderField}
+            validate={[required, plate]}
+            component={renderField}
           />
           <button
             className="btn btn-primary"
