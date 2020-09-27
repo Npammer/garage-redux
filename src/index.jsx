@@ -6,12 +6,14 @@ import reduxPromise from "redux-promise";
 import logger from "redux-logger";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createHistory as history } from "history";
+import { reducer as formReducer } from "redux-form";
 
 // Reducers
 import carsReducer from "./reducers/cars_reducer";
 
 // Components
 import CarsIndex from "./containers/cars_index";
+import CarsNew from "./containers/cars_new";
 
 import "../assets/stylesheets/application.scss";
 
@@ -25,6 +27,7 @@ const reducers = combineReducers({
   // eslint-disable-next-line no-unused-vars
   garage: (state = null, action) => state,
   cars: carsReducer,
+  form: formReducer,
 });
 
 const middlewares = applyMiddleware(reduxPromise, logger);
@@ -35,8 +38,8 @@ ReactDOM.render(
   <Provider store={createStore(reducers, initialState, middlewares)}>
     <Router history={history}>
       <Switch>
+        <Route path="/new" component={CarsNew} />
         <Route path="/:garage" component={CarsIndex} />
-        <Route path="/:garage/new" component={CarsNew} />
       </Switch>
     </Router>
   </Provider>,
