@@ -14,10 +14,12 @@ import carsReducer from "./reducers/cars_reducer";
 // Components
 import CarsIndex from "./containers/cars_index";
 import CarsNew from "./containers/cars_new";
+import CarsShow from "./containers/cars_show";
 
+// Styles
 import "../assets/stylesheets/application.scss";
 
-const garageName = `garage${Math.floor(10 + Math.random() * 90)}`; //TODO prompt("What is your garage?") ||
+const garageName = "garage44"; // TODO prompt("What is your garage?") || `garage${Math.floor(10 + Math.random() * 90)}`;
 const initialState = {
   garage: garageName,
   cars: [],
@@ -32,14 +34,14 @@ const reducers = combineReducers({
 
 const middlewares = applyMiddleware(reduxPromise, logger);
 
-// TODO <Redirect from="/" to="/general" />
 // render an instance of the component in the DOM
 ReactDOM.render(
   <Provider store={createStore(reducers, initialState, middlewares)}>
     <Router history={history}>
       <Switch>
+        <Route path="/" exact component={CarsIndex} />
         <Route path="/new" component={CarsNew} />
-        <Route path="/:garage" component={CarsIndex} />
+        <Route path="/cars/:id" component={CarsShow} />
       </Switch>
     </Router>
   </Provider>,

@@ -4,10 +4,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { reduxForm, Field } from "redux-form";
-import { createPost } from "../actions/actions";
+import { createCar } from "../actions/actions";
 
-const required = (value) => (value ? undefined : "Required");
-const plate = (value) =>
+const required = value => (value ? undefined : "This field is required");
+const plate = value =>
   value && !/^[A-Z0-9]+$/.test(value) ? "Invalid plate number" : undefined;
 
 const renderField = ({
@@ -30,9 +30,9 @@ const renderField = ({
 );
 
 class CarsNew extends Component {
-  onSubmit = (values) => {
-    this.props.createPost(this.props.garage, values, () => {
-      this.props.history.push(`/${this.props.garage}`); // Navigate after submit return post;
+  onSubmit = values => {
+    this.props.createCar(this.props.garage, values, () => {
+      this.props.history.push("/"); // Navigate after submit return post;
     });
   };
 
@@ -48,6 +48,7 @@ class CarsNew extends Component {
             type="text"
             validate={required}
             component={renderField}
+            placeholder="Tesla"
           />
           <Field
             label="Model"
@@ -84,7 +85,7 @@ class CarsNew extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createPost }, dispatch);
+  return bindActionCreators({ createCar }, dispatch);
 }
 
 function mapReduxStateToProps(reduxState) {
