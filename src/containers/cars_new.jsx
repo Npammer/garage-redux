@@ -6,6 +6,9 @@ import { bindActionCreators } from "redux";
 import { reduxForm, Field } from "redux-form";
 import { createCar } from "../actions/actions";
 
+// Components
+import CarsLeft from "../components/cars_left";
+
 const required = value => (value ? undefined : "This field is required");
 const plate = value =>
   value && !/^[A-Z0-9]+$/.test(value) ? "Invalid plate number" : undefined;
@@ -39,46 +42,50 @@ class CarsNew extends Component {
   // eslint-disable-next-line class-methods-use-this
   render() {
     return (
-      <div className="new-car">
-        <h3>New car</h3>
-        <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-          <Field
-            label="Brand"
-            name="brand"
-            type="text"
-            validate={required}
-            component={renderField}
-            placeholder="Tesla"
-          />
-          <Field
-            label="Model"
-            name="model"
-            type="text"
-            validate={required}
-            component={renderField}
-          />
-          <Field
-            label="Owner"
-            name="owner"
-            type="text"
-            validate={required}
-            component={renderField}
-          />
-          <Field
-            label="Plate"
-            name="plate"
-            type="text"
-            validate={[required, plate]}
-            component={renderField}
-          />
-          <button
-            className="btn btn-primary"
-            type="submit"
-            disabled={this.props.pristine || this.props.submitting}
-          >
-            Add Car
-          </button>
-        </form>
+      <div className="cars-new">
+        <CarsLeft buttonPath="/" buttonText="Back to list" />
+        <div className="new-right">
+          <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+            <Field
+              label="Brand"
+              name="brand"
+              type="text"
+              validate={required}
+              component={renderField}
+              placeholder="Tesla"
+            />
+            <Field
+              label="Model"
+              name="model"
+              type="text"
+              validate={required}
+              component={renderField}
+            />
+            <Field
+              label="Owner"
+              name="owner"
+              type="text"
+              validate={required}
+              component={renderField}
+            />
+            <Field
+              label="Plate"
+              name="plate"
+              type="text"
+              validate={[required, plate]}
+              component={renderField}
+            />
+            <div className="field-button">
+              <button
+                className="btn btn-primary"
+                type="submit"
+                disabled={this.props.pristine || this.props.submitting}
+              >
+                Add Car
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
